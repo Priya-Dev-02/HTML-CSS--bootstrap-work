@@ -121,8 +121,6 @@
       text-align: center;
     }
 
-    /* form */
-
     form {
       background: var(--color-darkblue-alpha);
       padding: 2.5rem 0.625rem;
@@ -192,6 +190,35 @@
       border-radius: 2px;
       cursor: pointer;
     }
+
+    .reset-button {
+      display: block;
+      width: 100%;
+      padding: 0.75rem;
+      margin-top: 10px;
+      background: #d9534f;
+      color: inherit;
+      border-radius: 2px;
+      cursor: pointer;
+    }
+
+    .highlight {
+      border: 2px solid red;
+    }
+
+    .character-count {
+      font-size: 0.875rem;
+      text-align: right;
+      margin-top: -10px;
+      margin-bottom: 10px;
+      color: #e4e4e4;
+    }
+
+    .rating-feedback {
+      margin-top: 5px;
+      font-size: 0.875rem;
+      color: #e4e4e4;
+    }
   </style>
   <title>Online Course Feedback</title>
 </head>
@@ -226,6 +253,7 @@
           <option value="average">Average</option>
           <option value="poor">Poor</option>
         </select>
+        <div id="rating-feedback" class="rating-feedback"></div>
       </div>
       <div class="form-group">
         <p>Would you recommend this course to others?</p>
@@ -247,26 +275,106 @@
         <label for="instructor">
           <input type="checkbox" name="aspect" class="input-checkbox" value="instructor">Instructor
         </label><br />
-        <label for="materials">
-          <input type="checkbox" name="aspect" class="input-checkbox" value="materials">Learning Materials
+        <label for="exercises">
+          <input type="checkbox" name="aspect" class="input-checkbox" value="exercises">Exercises
         </label><br />
-        <label for="platform">
-          <input type="checkbox" name="aspect" class="input-checkbox" value="platform">Online Platform
-        </label><br />
-        <label for="support">
-          <input type="checkbox" name="aspect" class="input-checkbox" value="support">Support
+        <label for="duration">
+          <input type="checkbox" name="aspect" class="input-checkbox" value="duration">Duration
         </label><br />
       </div>
       <div class="form-group">
-        <label for="comments" name="comments">Any additional comments or suggestions?</label><br>
-        <textarea name="comments" id="comments" placeholder="Enter your comments and suggestions" class="input-textarea"></textarea><br>
+        <label for="comments">Additional Comments</label><br />
+        <textarea id="comments" class="input-textarea form-control" placeholder="Enter your comments and suggestions"></textarea>
+        <div id="character-count" class="character-count">0/250</div>
       </div>
-      <div class="form-group">
-        <button type="submit" id="submit" class="submit-button">Submit</button>
-      </div>
+      <button type="submit" id="submit" class="submit-button">Submit</button>
+      <button type="reset" id="reset" class="reset-button">Reset</button>
     </form>
   </div>
+  <script>
+    document.getElementById('survey-form').addEventListener('submit', function (event) {
+      let firstInvalidField = null;
+
+      const name = document.getElementById('name').value;
+      const email = document.getElementById('email').value;
+      const course = document.getElementById('course').value;
+      const rating = document.getElementById('dropdown').value;
+      const recommend = document.querySelector('input[name="recommend"]:checked');
+      const aspects = document.querySelectorAll('input[name="aspect"]:checked');
+
+      if (!name || !email || !course || !rating || !recommend) {
+        alert('Please fill out all required fields.');
+        event.preventDefault();
+        firstInvalidField = document.querySelector('input:invalid, select:invalid');
+        if (firstInvalidField) firstInvalidField.focus();
+        return;
+      }
+
+      if (aspects.length === 0) {
+        alert('Please select at least one aspect you liked.');
+        event.preventDefault();
+        return;
+      }
+
+      const confirmed = confirm('Are you sure you want to submit this feedback?');
+      if (!confirmed) {
+        event.preventDefault();
+      }
+    });
+
+    document.getElementById('email').addEventListener('input', function () {
+      const email = this.value;
+      const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (emailPattern.test(email)) {
+        this.style.borderColor = '#ced4da';
+      } else {
+        this.style.borderColor = 'red';
+      }
+    });
+
+    document.getElementById('dropdown').addEventListener('change', function () {
+      const selectedRating = this.value;
+      const commentsSection = document.getElementById('comments').parentElement;
+      const ratingFeedback = document.getElementById('rating-feedback');
+
+      switch (selectedRating) {
+        case 'excellent':
+          ratingFeedback.textContent = 'Excellent: Outstanding course quality.';
+          break;
+        case 'good':
+          ratingFeedback.textContent = 'Good: Above average with minor improvements needed.';
+          break;
+        case 'average':
+          ratingFeedback.textContent = 'Average: Satisfactory but has room for improvement.';
+          break;
+        case 'poor':
+          ratingFeedback.textContent = 'Poor: Significant issues need to be addressed.';
+          commentsSection.classList.add('highlight');
+          commentsSection.querySelector('textarea').placeholder = 'Please explain what went wrong.';
+          break;
+        default:
+          ratingFeedback.textContent = '';
+      }
+
+      if (selectedRating !== 'poor') {
+        commentsSection.classList.remove('highlight');
+        commentsSection.querySelector('textarea').placeholder = 'Enter your comments and suggestions';
+      }
+    });
+
+    document.getElementById('comments').addEventListener('input', function () {
+      const maxLength = 250;
+      const currentLength = this.value.length;
+      const characterCount = document.getElementById('character-count');
+      characterCount.textContent = `${currentLength}/${maxLength}`;
+
+      if (currentLength > maxLength) {
+        this.style.borderColor = 'red';
+      } else {
+        this.style.borderColor = '#ced4da';
+      }
+    });
+  </script>
 </body>
 
 </html>
-```
