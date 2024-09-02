@@ -1,86 +1,206 @@
 <!DOCTYPE html>
-<html>
-    <head>
-        <title>Creative Loading Animation</title>
-        <link rel="stylesheet" href="style.css">
-    </head>
-    <body>
-        <div>
+<html lang="en">
 
-<table class="content-table">
-  <thead>
-    <tr>
-      <th>roll number</th>
-      <th>Name</th>
-      <th>marks</th>
-      <th>rank</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr class="active-row">
-      <td>198</td>
-      <td>karrena</td>
-      <td>800</td>
-      <td>1st</td>
-    </tr>
-    <tr >
-      <td>199</td>
-      <td>surya</td>
-      <td>780</td>
-      <td>2nd</td>
-    </tr>
-    <tr>
-      <td>200</td>
-      <td>vishal</td>
-      <td>700</td>
-      <td>3rd</td>
-    </tr>
-    
-<tr>
-      <td>201</td>
-      <td>lakshmi</td>
-      <td>700</td>
-      <td>4th</td>
-</tr>
-<tr class="active-row">
-      <td>202</td>
-      <td>priya</td>
-      <td>690</td>
-      <td>5th</td>
-</tr>
-<tr>
-      <td>203</td>
-      <td>rethisha</td>
-      <td>680</td>
-      <td>6th</tr>
-</tr>
-<tr>
-      <td>204</td>
-      <td>sweety</td>
-      <td>670</td>
-      <td>7th</td>
-</tr>
-<tr class="active-row">
-      <td>205</td>
-      <td>thuhina</td>
-      <td>660</td>
-      <td>8th</td>
-</tr>
-<tr>
-      <td>206</td>
-      <td>keerthana</td>
-      <td>650</td>
-      <td>9th</td>
-</tr>
-<tr>
-      <td>207</td>
-      <td>abirami</td>
-      <td>640</td>
-      <td>10th</td>
-</tr>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Creative Loading Animation</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f7f7f7;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
 
-  </tbody>
-</table>
-                </div>
-    </body>
+        .loading-wrapper {
+            display: none;
+            justify-content: center;
+            align-items: center;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(255, 255, 255, 0.8);
+            z-index: 999;
+        }
+
+        .loading-wrapper.active {
+            display: flex;
+        }
+
+        .loader {
+            border: 6px solid #f3f3f3;
+            border-radius: 50%;
+            border-top: 6px solid #3498db;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        .content-table {
+            border-collapse: collapse;
+            margin: 25px 0;
+            font-size: 1em;
+            min-width: 400px;
+            border-radius: 5px 5px 0 0;
+            overflow: hidden;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .content-table thead tr {
+            background-color: #009879;
+            color: #ffffff;
+            text-align: left;
+            font-weight: bold;
+        }
+
+        .content-table th,
+        .content-table td {
+            padding: 12px 15px;
+        }
+
+        .content-table tbody tr {
+            border-bottom: 1px solid #dddddd;
+        }
+
+        .content-table tbody tr:nth-of-type(even) {
+            background-color: #f3f3f3;
+        }
+
+        .content-table tbody tr:last-of-type {
+            border-bottom: 2px solid #009879;
+        }
+
+        .content-table tbody tr.active-row {
+            font-weight: bold;
+            color: #009879;
+        }
+
+        .content-table tbody tr:hover {
+            background-color: #f1f1f1;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="loading-wrapper" id="loading-wrapper">
+        <div class="loader"></div>
+    </div>
+
+    <div class="content">
+        <table class="content-table">
+            <thead>
+                <tr>
+                    <th>Roll Number</th>
+                    <th>Name</th>
+                    <th>Marks</th>
+                    <th>Rank</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="active-row">
+                    <td>198</td>
+                    <td>Karrena</td>
+                    <td>800</td>
+                    <td>1st</td>
+                </tr>
+                <tr>
+                    <td>199</td>
+                    <td>Surya</td>
+                    <td>780</td>
+                    <td>2nd</td>
+                </tr>
+                <tr>
+                    <td>200</td>
+                    <td>Vishal</td>
+                    <td>700</td>
+                    <td>3rd</td>
+                </tr>
+                <tr>
+                    <td>201</td>
+                    <td>Lakshmi</td>
+                    <td>700</td>
+                    <td>4th</td>
+                </tr>
+                <tr class="active-row">
+                    <td>202</td>
+                    <td>Priya</td>
+                    <td>690</td>
+                    <td>5th</td>
+                </tr>
+                <tr>
+                    <td>203</td>
+                    <td>Rethisha</td>
+                    <td>680</td>
+                    <td>6th</tr>
+                </tr>
+                <tr>
+                    <td>204</td>
+                    <td>Sweety</td>
+                    <td>670</td>
+                    <td>7th</td>
+                </tr>
+                <tr class="active-row">
+                    <td>205</td>
+                    <td>Thuhina</td>
+                    <td>660</td>
+                    <td>8th</td>
+                </tr>
+                <tr>
+                    <td>206</td>
+                    <td>Keerthana</td>
+                    <td>650</td>
+                    <td>9th</td>
+                </tr>
+                <tr>
+                    <td>207</td>
+                    <td>Abirami</td>
+                    <td>640</td>
+                    <td>10th</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        window.addEventListener('load', function () {
+            const loadingWrapper = document.getElementById('loading-wrapper');
+            loadingWrapper.classList.remove('active');
+
+            const rows = document.querySelectorAll('.content-table tbody tr');
+            rows.forEach(row => {
+                row.addEventListener('mouseover', () => {
+                    row.style.backgroundColor = '#e0f7fa';
+                });
+                row.addEventListener('mouseout', () => {
+                    row.style.backgroundColor = '';
+                });
+            });
+        });
+
+        document.addEventListener('DOMContentLoaded', function () {
+            const loadingWrapper = document.getElementById('loading-wrapper');
+            loadingWrapper.classList.add('active');
+        });
+    </script>
+</body>
+
 </html>
